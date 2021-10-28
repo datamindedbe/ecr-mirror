@@ -164,19 +164,20 @@ def find_tags_to_copy(image_name, tag_patterns):
     """
     Use Skopeo to list all available tags for an image
     """
-    output = subprocess.check_output(
-        ["skopeo", "list-tags", f"docker://{image_name}", "--override-os=linux"]
-    )
-    all_tags = json.loads(output)["Tags"]
+    return tag_patterns
+    # output = subprocess.check_output(
+    #     ["skopeo", "list-tags", f"docker://{image_name}", "--override-os=linux"]
+    # )
+    # all_tags = json.loads(output)["Tags"]
 
-    if not tag_patterns:
-        return all_tags
+    # if not tag_patterns:
+    #     return all_tags
 
-    yield from (
-        tag
-        for tag in all_tags
-        if any(fnmatch.fnmatch(tag, pattern) for pattern in tag_patterns)
-    )
+    # yield from (
+    #     tag
+    #     for tag in all_tags
+    #     if any(fnmatch.fnmatch(tag, pattern) for pattern in tag_patterns)
+    # )
 
 
 def find_repositories(client: ECRClient, registry_id: str):
